@@ -256,8 +256,11 @@ namespace EntityFrameworkCore.Generator.Templates
 
             if (!string.IsNullOrEmpty(property.Default))
             {
-                CodeBuilder.AppendLine();
-                CodeBuilder.Append($".HasDefaultValueSql({property.Default.ToLiteral()})");
+                if (property.NativeType != "bit")
+                {
+                    CodeBuilder.AppendLine();
+                    CodeBuilder.Append($".HasDefaultValueSql({property.Default.ToLiteral()})");
+                }
             }
 
             switch (property.ValueGenerated)
